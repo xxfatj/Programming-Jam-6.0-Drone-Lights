@@ -1,0 +1,87 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+        public static void main(String[] args) {
+                Scanner sc = new Scanner(System.in);
+                
+                int n = sc.nextInt();
+                int b = sc.nextInt();
+                int k = sc.nextInt();
+                
+                int[] vector = new int[b];
+                for(int i=0; i<b; i++) {
+                    vector[i] = sc.nextInt();
+                }
+                
+                String lights = "";
+                for(int i=0; i<n; i++){
+                    lights += "0";
+                }
+                
+                for(int i: vector){
+                    switch(i) {
+                        case 1:
+                            lights = changeAll(lights);
+                            break;
+                        case 2:
+                            lights = changeEven(lights);
+                            break;
+                        case 3:
+                            lights = changeOdd(lights);
+                            break;
+                        case 4:
+                            int pos = (3 * k + 1) / n;
+                            lights = changeAtk(lights, pos);
+                          break;
+                    }
+                }
+                System.out.print(lights);
+        }
+        // method to inverse the color of all position.
+        public static String changeAll(String lights){
+            String modify = "";
+            for(int i=0; i<lights.length(); i++) {
+                modify += (lights.charAt(i) == '0') ? '1' : '0';
+            }
+            return modify;
+        }
+        //method to change the color at even position;
+        public static String changeEven(String lights){
+            String modify = "";
+            for(int i=0; i<lights.length(); i++) {
+                if((i+1) % 2 != 0){
+                    modify += lights.charAt(i);
+                    continue;
+                }
+                modify += (lights.charAt(i) == '0') ? '1' : '0';
+            }
+            return modify;
+        }
+        
+        // method to change the color at odd position;
+        public static String changeOdd(String lights){
+            String modify = "";
+            for(int i=0; i<lights.length(); i++) {
+                if((i+1) % 2 == 0){
+                    modify += lights.charAt(i);
+                    continue;
+                }
+                modify += (lights.charAt(i) == '0') ? '1' : '0';
+            }
+            return modify;
+        }
+        
+        // method to change the state at position (3*k+1) / n;
+        public static String changeAtk(String lights, int pos){
+            String modify = lights.substring(0,pos);
+            
+            modify += (lights.charAt(pos) == '0') ? '1' : '0';
+            modify += lights.substring(pos+1); 
+           
+            return modify;
+        }
+        
+        
+}
